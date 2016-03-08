@@ -5,7 +5,6 @@ function($rootScope, Facebook) {
     var eventqueryService = {};
 
     eventqueryService.events = [];
-    eventqueryService._facebookReady = false;
     eventqueryService._userIsConnected = false;
     eventqueryService.dataReadyCb = null;
 
@@ -22,20 +21,26 @@ function($rootScope, Facebook) {
         function(response) {
             eventqueryService.events = response.events.data;
             if(eventqueryService.dataReadyCb) {
+                console.log("Data Ready Callback");
+                console.log($rootScope.coworking_nights);
+                console.log($rootScope.coworking_venues);
+                console.log(response.events.data);
                 eventqueryService.dataReadyCb();
             }
         });
     }
 
     eventqueryService.init_user = function () {
-        eventqueryService._facebookReady = true;
-
-        Facebook.getLoginStatus(function(response) {
-            if(response.status == 'connected') {
-                eventqueryService._userIsConnected = true;
-                eventqueryService.retrieveEvents();
-            }
-        });
+        console.log("init_user");
+        console.log(eventqueryService.isSdkReady());
+        if (eventqueryService.isSdkReady()) {
+            Facebook.getLoginStatus(function(response) {
+                if(response.status == 'connected') {
+                    eventqueryService._userIsConnected = true;
+                    eventqueryService.retrieveEvents();
+                }
+            });
+        }
     }
 
     eventqueryService.isUserConnected = function () {

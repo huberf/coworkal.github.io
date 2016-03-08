@@ -5,7 +5,16 @@
             <span>Login with Facebook</span>
         </button>
     </div>
-    <div ng-if="draw">
-        <div id="calendar"></div>
+
+    <div>
+        <div class="intro">
+        <div class="header">
+        <div class="container-fluid">
+        <h1 class="flyer-title pull-xs-left">Coworking Night #{{ night_id }}</h1>
+        <h2 class="flyer-subtitle pull-xs-left pull-sm-right">{{ date | date: 'MMM d, yyyy' }} •  AL.com  •  6‑11pm </h2>
+        </div>
+        </div>
+        </div>
+        <div id="fullcalendar"></div>
     </div>
 </div>

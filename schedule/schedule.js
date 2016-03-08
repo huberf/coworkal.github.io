@@ -13,34 +13,21 @@ angular.module('flyerApp.schedule', ['ngRoute', 'services.eventquery'])
 
 function($scope, $routeParams, $rootScope, eventquery) {
     $scope.draw = false;
+    $scope.night_id = $routeParams.id;
+    $scope.date = eventquery.getCoworkingDate($scope.night_id);
 
     eventquery.dataReadyCb = function() {
         $scope.night_id = $routeParams.id;
         $scope.events = eventquery.getEvents($scope.night_id);
-
         $scope.base_date = eventquery.getCoworkingDate($scope.night_id);
 
-        $scope.rooms = $rootScope.coworking_venues;
-        $scope.times = [];
-
-        var base_hours = 18;
-        var base_mins = 0;
-
-        for (var i = 0; i < 21; i++) {
-            var new_date = new Date();
-            new_date.setDate($scope.base_date.getDate());
-            var new_mins = base_mins + i * 15;
-            var new_hours = base_hours;
-            while (new_mins >= 60) {
-                new_hours = new_hours + 1;
-                new_mins = new_mins - 60;
-            }
-            new_date.setHours(new_hours, new_mins);
-            $scope.times.push(new_date);
+        while($rootScope.coworking_venues.length == 0) {
+            console.log("Waiting for venues");
         }
 
+        console.log("Got venues: " + $rootScope.coworking_venues);
+        $scope.rooms = $rootScope.coworking_venues;
         var resources = [];
-
         for (var i = 0; i < $scope.rooms.length; i++) {
             if ($scope.rooms[i].capacity > 3)
             resources.push({
@@ -50,7 +37,6 @@ function($scope, $routeParams, $rootScope, eventquery) {
         }
 
         var calendar_events = [];
-
         for (var i = 0; i < $scope.events.length; i++) {
             var e = {}
             e.title = $scope.events[i].name;
@@ -60,30 +46,27 @@ function($scope, $routeParams, $rootScope, eventquery) {
             calendar_events.push(e);
         }
 
+        console.log(resources);
+        console.log(calendar_events);
 
-        $('#calendar').fullCalendar({
+        $scope.draw = true;
+
+        $('#fullcalendar').fullCalendar({
+            aspectRatio: 2,
             schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+            resources: resources,
+            events: calendar_events,
+            defaultView: 'agendaDay',
             header: false,
             defaultDate: $scope.base_date,
             allDaySlot: false,
-            defaultView: 'agendaDay',
             minTime: "18:00:00",
             maxTime: "23:00:00",
             slotDuration: "00:15:00",
+            slotEventOverlap: false,
             editable: false,
-            eventLimit: true,
-            events: calendar_events,
-            resources: resources,
-            views: {
-                agendaResource: {
-                    type: 'agenda',
-                    duration: {days: 1},
-                    groupByResource: true
-                }
-            }
+            eventLimit: true
         });
-
-        $scope.draw = true;
     }
 
     $scope.$watch(
@@ -100,6 +83,7 @@ function($scope, $routeParams, $rootScope, eventquery) {
             eventquery.login();
         }
     };
+
 
 
 }])
