@@ -14,7 +14,7 @@
         <li>Description: Begin with one paragraph that is 140 characters or less.  Include remaining description in subsequent paragraphs.</li>
     </ul>
 
-    <div ng-if="!userIsConnected">
+    <div ng-if="!draw">
         <button type="button" class="btn btn-full btn-blue mb-lg" ng-click="IntentLogin()">
             <i class="icon icon-facebook"></i>
             <span>Login with Facebook</span>
@@ -22,7 +22,7 @@
     </div>
 
 
-    <div ng-if="userIsConnected">
+    <div ng-if="draw">
     <h2>Upcoming Events</h2>
     <table class="table table-bordered">
         <thead>
