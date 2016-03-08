@@ -68,10 +68,12 @@ function($scope, $routeParams, $filter, eventquery) {
             result.place = eventquery.getCoworkingVenue(result);
             result.check.size = "Pass";
 
+            var num_people = result.attending_count + 0.5 * result.interested_count;
+
             if (result.place.full != "To Be Posted") {
-                if (result.attending_count >= 2* result.place.capacity) {
+                if (num_people >= 2* result.place.capacity) {
                     result.check.size = "Over Capacity";
-                } else if (result.attending_count >= result.place.capacity) {
+                } else if (num_people >= result.place.capacity) {
                     result.check.size = "Full";
                 }
             }

@@ -12,7 +12,6 @@ angular.module('flyerApp.flyer', ['ngRoute', 'services.eventquery'])
 .controller('FlyerCtrl', [ '$scope', '$routeParams', '$filter', 'eventquery',
 
 function ($scope, $routeParams, $filter, eventquery) {
-
     $scope.draw = false;
 
     eventquery.dataReadyCb = function() {

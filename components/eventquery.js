@@ -17,7 +17,8 @@ function($rootScope, Facebook) {
     }
 
     eventqueryService.retrieveEvents = function() {
-        Facebook.api('/954447087970025', 'GET', {'fields': 'events{owner,id,place,start_time,end_time,description,name,is_viewer_admin,attending_count}' },
+        Facebook.api('/954447087970025', 'GET', {'fields':
+        'events{owner,id,place,start_time,end_time,description,name,is_viewer_admin,attending_count,interested_count}' },
         function(response) {
             eventqueryService.events = response.events.data;
             if(eventqueryService.dataReadyCb) {
