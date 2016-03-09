@@ -25,10 +25,9 @@ function($scope, $routeParams, $rootScope, eventquery) {
             console.log("Waiting for venues");
         }
 
-        console.log("Got venues: " + $rootScope.coworking_venues);
         $scope.rooms = $rootScope.coworking_venues;
         var resources = [];
-        for (var i = 0; i < $scope.rooms.length; i++) {
+        for (var i = 1; i < $scope.rooms.length; i++) {
             if ($scope.rooms[i].capacity > 3)
             resources.push({
                 id: $scope.rooms[i].map_id,
@@ -36,23 +35,27 @@ function($scope, $routeParams, $rootScope, eventquery) {
             });
         }
 
-        var calendar_events = [];
-        for (var i = 0; i < $scope.events.length; i++) {
-            var e = {}
+        $scope.to_be_posted = [];
+
+        var calendar_events = []; for (var i = 0; i < $scope.events.length; i++) { var e = {}
             e.title = $scope.events[i].name;
             e.start = $scope.events[i].start_time;
             e.end = $scope.events[i].end_time;
             e.resourceId = eventquery.getCoworkingVenue($scope.events[i]).map_id;
+            e.host = $scope.events[i].owner.name;
+
+            if(e.resourceId == $scope.rooms[0].map_id) {
+                $scope.to_be_posted.push(e);
+            }
+
             calendar_events.push(e);
         }
-
-        console.log(resources);
-        console.log(calendar_events);
 
         $scope.draw = true;
 
         $('#fullcalendar').fullCalendar({
-            aspectRatio: 2,
+            //aspectRatio: 2.0,
+            height: 600,
             schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
             resources: resources,
             events: calendar_events,
