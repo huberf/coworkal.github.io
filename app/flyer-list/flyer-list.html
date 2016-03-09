@@ -13,10 +13,10 @@
 <h2>Future Events</h2>
 <ul>
     <li ng-repeat="event in upcoming">
-        Coworking Night #{{next_event.id}} - {{ next_event.date | date: 'MMM d, yyyy' }}
+        Coworking Night #{{event.id}} - {{ event.date | date: 'MMM d, yyyy' }}
         <ul>
-            <li><a href="#/flyer/{{ next_event.id }}">Flyer</a></li>
-            <li><a href="#/schedule/{{ next_event.id }}">Schedule</a></li>
+            <li><a href="#/flyer/{{ event.id }}">Flyer</a></li>
+            <li><a href="#/schedule/{{ event.id }}">Schedule</a></li>
         </ul>
     </li>
 </ul>
@@ -24,10 +24,10 @@
 <h2>Past Events</h2>
 <ul>
     <li ng-repeat="event in past">
-        Coworking Night #{{next_event.id}} - {{ next_event.date | date: 'MMM d, yyyy' }}
+        Coworking Night #{{event.id}} - {{ event.date | date: 'MMM d, yyyy' }}
         <ul>
-            <li><a href="#/flyer/{{ next_event.id }}">Flyer</a></li>
-            <li><a href="#/schedule/{{ next_event.id }}">Schedule</a></li>
+            <li><a href="#/flyer/{{ event.id }}">Flyer</a></li>
+            <li><a href="#/schedule/{{ event.id }}">Schedule</a></li>
         </ul>
     </li>
 </ul>
