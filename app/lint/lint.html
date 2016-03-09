@@ -36,6 +36,8 @@
                 <th>End Time</th>
                 <th>Room Assignment</th>
                 <th>Event Capacity</th>
+                <th>Attending</th>
+                <th>Interested</th>
             </tr>
         </thead>
         <tr ng-repeat="event in upcoming" ng-class="{true:'highlight', false:''}[event.is_viewer_admin]">
@@ -47,7 +49,10 @@
             <td><span class="label" ng-class="{true:'label-success', false:'label-danger'}[event.check.start == 'Pass']">{{ event.check.start }}</span></td>
             <td><span class="label" ng-class="{true:'label-success', false:'label-danger'}[event.check.end == 'Pass']">{{ event.check.end }}</span></td>
             <td><span class="label" ng-class="{true:'label-warning', false:'label-success'}[event.place.full == 'To Be Posted']">{{ event.place.full }}</td>
-            <td><span class="label" ng-class="{'Over Capacity':'label-danger', 'Full':'label-warning', 'Pass':'label-success'}[event.check.size]">{{ event.check.size }}: {{ event.attending_count }}</td>
+            <td><span class="label" ng-class="{'Over Capacity':'label-danger', 'Full':'label-warning', 'Pass':'label-success'}[event.check.size]">{{ event.check.size }}: {{ event.place.capacity }}</span>
+            <td>{{ event.attending_count }}</td>
+            <td>{{ event.interested_count }}</td>
+            </td>
         </tr>
     </table>
 
@@ -64,6 +69,8 @@
                 <th>End Time</th>
                 <th>Room Assignment</th>
                 <th>Event Capacity</th>
+                <th>Attending</th>
+                <th>Interested</th>
             </tr>
         </thead>
         <tr ng-repeat="event in past" ng-class="{true:'highlight', false:''}[event.is_viewer_admin]">
@@ -76,6 +83,8 @@
             <td><span class="label" ng-class="{true:'label-success', false:'label-danger'}[event.check.end == 'Pass']">{{ event.check.end }}</span></td>
             <td><span class="label" ng-class="{true:'label-warning', false:'label-success'}[event.place.full == 'To Be Posted']">{{ event.place.full }}</td>
             <td><span class="label" ng-class="{'Over Capacity':'label-danger', 'Full':'label-warning', 'Pass':'label-success'}[event.check.capacity]">{{ event.place.capacity }}</td>
+            <td>{{ event.attending_count }}</td>
+            <td>{{ event.interested_count }}</td>
         </tr>
     </table>
     </div>

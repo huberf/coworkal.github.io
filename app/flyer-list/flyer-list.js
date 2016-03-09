@@ -17,6 +17,10 @@ function ($scope, $rootScope, $routeparams) {
     $scope.past = [];
     $scope.next_event = {};
 
+    while($rootScope.coworking_nights.length == 0) {
+        console.log("Waiting for events");
+    }
+
     var today = new Date();
     for (var i = 0; i < $rootScope.coworking_nights.length; i++) {
         var event_date = $rootScope.coworking_nights[i].date;

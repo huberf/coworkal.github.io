@@ -5,7 +5,6 @@ function($rootScope, Facebook) {
     var eventqueryService = {};
 
     eventqueryService.events = [];
-    eventqueryService._facebookReady = false;
     eventqueryService._userIsConnected = false;
     eventqueryService.dataReadyCb = null;
 
@@ -18,24 +17,31 @@ function($rootScope, Facebook) {
     }
 
     eventqueryService.retrieveEvents = function() {
-        Facebook.api('/954447087970025', 'GET', {'fields': 'events{owner,id,place,start_time,end_time,description,name,is_viewer_admin,attending_count}' },
+        Facebook.api('/954447087970025', 'GET', {'fields':
+        'events{owner,id,place,start_time,end_time,description,name,is_viewer_admin,attending_count,interested_count}' },
         function(response) {
             eventqueryService.events = response.events.data;
             if(eventqueryService.dataReadyCb) {
+                console.log("Data Ready Callback");
+                console.log($rootScope.coworking_nights);
+                console.log($rootScope.coworking_venues);
+                console.log(response.events.data);
                 eventqueryService.dataReadyCb();
             }
         });
     }
 
     eventqueryService.init_user = function () {
-        eventqueryService._facebookReady = true;
-
-        Facebook.getLoginStatus(function(response) {
-            if(response.status == 'connected') {
-                eventqueryService._userIsConnected = true;
-                eventqueryService.retrieveEvents();
-            }
-        });
+        console.log("init_user");
+        console.log(eventqueryService.isSdkReady());
+        if (eventqueryService.isSdkReady()) {
+            Facebook.getLoginStatus(function(response) {
+                if(response.status == 'connected') {
+                    eventqueryService._userIsConnected = true;
+                    eventqueryService.retrieveEvents();
+                }
+            });
+        }
     }
 
     eventqueryService.isUserConnected = function () {
@@ -47,11 +53,27 @@ function($rootScope, Facebook) {
             Facebook.login(function(response) {
                 if (response.status == 'connected') {
                     eventqueryService._userIsConnected = true;
+                    eventqueryService.retrieveEvents();
                 }
             });
         }
-        eventqueryService.init_user();
     };
+
+    eventqueryService.getEvents = function(id) {
+        var result = [];
+        var df = eventqueryService.getCoworkingDate(id);
+        var dt = eventqueryService.getCoworkingDate(id);
+        df.setDate(df.getDate() - 1);
+        dt.setDate(dt.getDate() + 1);
+
+        for (var i = 0; i < eventqueryService.events.length; i++) {
+            var event_date = new Date(eventqueryService.events[i].start_time);
+            if (event_date > df && event_date < dt) {
+                result.push(eventqueryService.events[i]);
+            }
+        }
+        return result;
+    }
 
     eventqueryService.getCoworkingDate = function(id) {
         for (var i = 0; i < $rootScope.coworking_nights.length; i++) {
@@ -79,7 +101,7 @@ function($rootScope, Facebook) {
                 return $rootScope.coworking_venues[i];
             }
         }
-        return {"match": "To Be Posted", "full": "To Be Posted", "floor": "" };
+        return $rootScope.coworking_venues[0];
     }
 
     return eventqueryService;

@@ -1,6 +1,14 @@
 {
     "venues": [
         {
+            "match": "To Be Posted",
+            "full": "To Be Posted",
+            "floor": -1,
+            "map_id": -1,
+            "type": "",
+            "capacity": 1000
+        },
+        {
             "match": "Apollo",
             "full": "Apollo Room",
             "floor": 1,
@@ -44,6 +52,7 @@
             "match": "Redstone",
             "full": "Redstone Room",
             "floor": 2,
+            "map_id": 6,
             "type": "Conference",
             "capacity": 5
         },
@@ -51,6 +60,7 @@
             "match": "Saturn V",
             "full": "Saturn V Room",
             "floor": 2,
+            "map_id": 7,
             "type": "Conference",
             "capacity": 5
         },
@@ -58,6 +68,7 @@
             "match": "Big Spring",
             "full": "Big Spring Room",
             "floor": 2,
+            "map_id": 8,
             "type": "Conference",
             "capacity": 14
         },
@@ -66,12 +77,14 @@
             "full": "Rear Pitch Area",
             "floor": 1,
             "type": "Open Area",
+            "map_id": 9,
             "capacity": 25
         },
         {
             "match": "Vault",
             "full": "Vault Room",
             "floor": 2,
+            "map_id": 10,
             "type": "Conference",
             "capacity": 8
         }
