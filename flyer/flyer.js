@@ -48,7 +48,9 @@ function ($scope, $routeParams, $filter, eventquery) {
         for (var i = 0; i < $scope.events.length ; i++) {
             var event_date = new Date($scope.events[i].start_time);
             if (event_date > df && event_date < dt){
-                $scope.events[i].short_desc = $scope.events[i].description.split("\n")[0];
+                $scope.events[i].short_desc = ""
+                if ($scope.events[i].description)
+                  $scope.events[i].short_desc = $scope.events[i].description.split("\n")[0];
                 $scope.events[i].venue = eventquery.getCoworkingVenue($scope.events[i]);
                 result.push($scope.events[i]) ;
             }

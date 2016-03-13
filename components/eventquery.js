@@ -22,18 +22,12 @@ function($rootScope, Facebook) {
         function(response) {
             eventqueryService.events = response.events.data;
             if(eventqueryService.dataReadyCb) {
-                console.log("Data Ready Callback");
-                console.log($rootScope.coworking_nights);
-                console.log($rootScope.coworking_venues);
-                console.log(response.events.data);
                 eventqueryService.dataReadyCb();
             }
         });
     }
 
     eventqueryService.init_user = function () {
-        console.log("init_user");
-        console.log(eventqueryService.isSdkReady());
         if (eventqueryService.isSdkReady()) {
             Facebook.getLoginStatus(function(response) {
                 if(response.status == 'connected') {
